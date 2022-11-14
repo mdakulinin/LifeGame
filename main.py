@@ -1,4 +1,3 @@
-import math
 from random import choice
 import pygame
 from pygame.draw import *
@@ -14,7 +13,7 @@ WIDTH = 1200
 HEIGHT = 800
 
 FIELD_WIDTH = 1200//20
-FIELF_HEIGH = 800//20
+FIELD_HEIGHT = 800//20
 
 class Bacteria:
     def __init__(self, x, y, cell_type):
@@ -22,29 +21,29 @@ class Bacteria:
         self.y = y
         self.cell_type = cell_type
         self.health = 100
-        #self.genome = genome
+        #self.genome 
         #self.patterns = patterns
     
     def move(self, direction):
-        if direction == 0:
+        if direction == 0 and self.x != 0 and self.y != 0:
             self.x += -1
             self.y += -1
-        elif direction == 1:
+        elif direction == 1 and self.y != 0:
             self.y += -1
-        elif direction == 2:
+        elif direction == 2 and self.y != 0 and self.x != FIELD_WIDTH - 1:
             self.x += 1
             self.y += -1
-        elif direction == 3:
+        elif direction == 3 and self.x != FIELD_WIDTH - 1:
             self.x += 1
-        elif direction == 4:
+        elif direction == 4 and self.x != FIELD_WIDTH - 1 and self.y != FIELD_HEIGHT - 1:
             self.x += 1
             self.y += 1
-        elif direction == 5:
+        elif direction == 5 and self.y != FIELD_HEIGHT - 1:
             self.y += 1
-        elif direction == 6:
+        elif direction == 6 and self.x != 0 and self.y != FIELD_HEIGHT - 1:
             self.x += -1
             self.y += 1
-        elif direction == 7:
+        elif direction == 7 and self.x != 0:
             self.x -= 1
     
     def draw(self, screen):
