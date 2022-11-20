@@ -2,14 +2,16 @@ from random import choice
 import pygame
 from pygame.draw import *
 from random import randint
+from pygame.font import *
 
-FPS = 1000000
+FPS = 1
 
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 WHITE = 0xFFFFFF
 BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
+WHITE = (255, 255, 255)
 
 WIDTH = 1200
 HEIGHT = 800
@@ -20,6 +22,9 @@ FIELD_HEIGHT = 800//20
 directions = [(-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0)]
 
 mutation_num = [0 for x in range(16)]
+
+pygame.font.init()
+f = Font(None, 16)
 
 class Bacteria:
     def __init__(self, x, y, genome=0):
@@ -35,6 +40,7 @@ class Bacteria:
         self.y = y
         self.health = 128
         self.genome = [randint(0, 127) for i in range(128)]
+        self.text = f.render(str(self.health), True, WHITE)
         #self.patterns = patterns
     
     def move(self, direction):
@@ -59,16 +65,20 @@ class Bacteria:
         elif direction == 7 and self.x != 0:
             self.x += -1
         self.health -= 1
+        self.text = f.render(str(self.health), True, WHITE)
     
     def draw(self, screen):
         rect(screen, BLUE, (self.x * 20 + 1, self.y * 20 + 1, 19, 19))
+        screen.blit(self.text, (self.x * 20, self.y * 20))
     
     def eat_and_suffer(self, n):
         if cells[self.x + directions[n][0] - 1][self.y + directions[n][1] - 1].amount_of_food == 1:
             self.health += 1
+            self.text = f.render(str(self.health), True, WHITE)
             #cells[self.x + directions[n][0] - 1][self.y + directions[n][1] - 1].amount_of_food = 0
         elif cells[self.x + directions[n][0] - 1][self.y + directions[n][1] - 1].is_poison == 1:
             self.health += -1
+            self.text = f.render(str(self.health), True, WHITE)
             #cells[self.x + directions[n][0] - 1][self.y + directions[n][1] - 1].is_poison = 0
     
     def mutate(self):
@@ -129,10 +139,7 @@ while not finished:
     for i in range(20, 1200, 20):
         line(screen, BLACK, (i, 0), (i, 800))
     for i in range(20, 800, 20):
-        line(screen, BLACK, (0, i), (1200, i))   
-    for bac in bacteria:
-        if not bac.is_dead():
-            bac.draw(screen)  
+        line(screen, BLACK, (0, i), (1200, i))     
     for i in range(len(bacteria)):
         if bacteria[i].is_dead():
             bacteria[i].mutate()
