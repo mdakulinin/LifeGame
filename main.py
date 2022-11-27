@@ -3,6 +3,7 @@ import pygame
 from pygame.draw import *
 from random import randint
 from pygame.font import *
+from shell import *
 
 FPS = 10
 
@@ -29,6 +30,13 @@ mutation_num = [0 for x in range(CELLS_NUMBER)]
 pygame.font.init()
 f = Font(None, 16)
 f1 = Font(None, 24)
+
+parser = Parser()
+namespace = parser.parse_args(sys.argv[1:])
+if namespace.genome_size:
+    genome_size = int(namespace.genome_size[0])
+else: 
+    genome_size = 16   
 
 class Bacteria:
     def __init__(self, x, y, genome=0):
