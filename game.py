@@ -3,7 +3,6 @@ import pygame
 from pygame.draw import *
 from random import randint
 from pygame.font import *
-from shell import *
 from classes import *
 
 FPS = 10
@@ -20,13 +19,12 @@ HEIGHT = 800
 FIELD_WIDTH = 1200//20
 FIELD_HEIGHT = 800//20
 
-directions = ((-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0))
-CELLS_NUMBER = 16
+directions = ((-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0)) #направления движения бактерий
+CELLS_NUMBER = 16 #количество бактерий на поле
 
-mutation_num = [0 for x in range(CELLS_NUMBER)]
+mutation_num = [0 for x in range(CELLS_NUMBER)] #статистика по мутациям для каждой клеточной линии
             
 def GAME(GENOME_SIZE):
-    global f, f1
     pygame.font.init()
     f = Font(None, 16)
     f1 = Font(None, 24)
@@ -41,9 +39,10 @@ def GAME(GENOME_SIZE):
     clock = pygame.time.Clock()
     finished = False
     for i in range(CELLS_NUMBER):
-        bacteria.append(Bacteria(randint(1, FIELD_WIDTH - 1), randint(1, FIELD_HEIGHT - 1), cells, GENOME_SIZE, f))
-    time = 0
+        bacteria.append(Bacteria(randint(1, FIELD_WIDTH - 1), randint(1, FIELD_HEIGHT - 1), cells, GENOME_SIZE, f)) #создание бактерии
+    time = 0 #время
     while not finished:
+        #отрисовка поля и бактерий
         screen.fill(WHITE)
         for cell_list in cells:
             for cell in cell_list:
