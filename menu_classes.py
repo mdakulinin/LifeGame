@@ -4,31 +4,26 @@ import pygame
 from pygame.draw import *
 from menu_functions import *
 
-'''
-класс Checkbox — класс множества квадратиков с надписями, позволяющими выбрать размер генома.
-pos — позиция квадратика;
-size — размер квадратика;
-outline — ширина обводки;
-index — порядковый номер квадратика;
-'''
-
 class Checkbox:
     def __init__ (self,  pos, size, outline, index):
+        '''
+        Класс Checkbox — класс множества квадратиков с надписями, позволяющими выбрать размер генома.
+        pos — позиция квадратика;
+        size — размер квадратика;
+        outline — ширина обводки;
+        index — порядковый номер квадратика;
+        '''        
         self.pos = pos
         self.size = size
         self.outline = outline
         self.index = index
-        
-    '''
-    drawRect — нарисовать квадратик.
-    drawCross — нарисовать крест в квадрате.
-    Text — написать текст над квадратом.
-    '''
     
     def drawRect(self, screen, height):
+        #Рисование квадратика
         rect(screen, (0,0,0), (self.pos, height+60, self.size, self.size), self.outline)
         
     def drawCross(self, screen, height):
+        #Рисование крестика в квадратике
         o = self.outline
         s = self.size
         pos = self.pos
@@ -38,6 +33,7 @@ class Checkbox:
         line(screen, (0,0,0), [pos + o, h + s - o], [pos + s - o, h + o], o)        
     
     def Text(self, screen, height,amount):
+        #Написать текст на квадратике
         f1 = round((self.size + 10)*0.8)
         f2 = round((self.size + 10)*80/133)
         h = height - 45*(f1/90) + 50
